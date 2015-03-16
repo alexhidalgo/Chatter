@@ -1,0 +1,26 @@
+<ion-view title="chat">
+	<ion-header-bar align-title="left" class="bar-positive">
+  <div class="buttons">
+    <button class="button" ng-click="logout()">Logout</button>
+  </div>
+</ion-header-bar>
+
+<ion-content>
+
+	<div ng-repeat="chat in chats"class="list">
+	  <div class="item item-text-wrap">
+	  	<p>{{ chat.message }}</p>
+	  </div>
+	</div>
+</ion-content>
+
+<ion-footer-bar>
+  <div class="item item-input-inset message-box">
+    <label for="" class="item-input-wrapper">
+      <input type="text" placeholder="Message" ng-model="message.message">
+    </label>
+    <button class="button button-small" ng-click="send(message.message)">Send</button>
+  </div>
+</ion-footer-bar>
+</ion-view>
+
