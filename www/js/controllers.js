@@ -11,23 +11,15 @@ angular.module('app.controllers', ['firebase'])
 	});
 
 	$scope.login = function(user) {
-		if(user.username !== ""){
-			console.log("This is the username" + user);
-			$rootScope.username = user.username;
-			console.log($rootScope.username);
-			$state.go('chat');
-			$scope.username = "";
-		}
+		// if(user.username !== ""){
+		// 	console.log("This is the username" + user);
+		// 	$rootScope.username = user.username;
+		// 	console.log($rootScope.username);
+		// 	$state.go('chat');
+		// 	$scope.username = "";
+		// }
 
-
-		// if(user && user.email && user.password) {
-		// 	$ionicLoading.show({
-		// 		template: 'Signing In...'
-		// 	});
-		// 	ref.authWithPassword({
-		//   email: user.email,
-		//   password: user.password
-		// 	}).then(function(authData) {
+		// .then(function(authData) {
 		// 		console.log("Logged in as: " + authData.uid);
 		// 		ref.child("users").child(authData.uid).once('value', function(snapshot) {
 		// 			var val = snapshot.val();
@@ -43,34 +35,45 @@ angular.module('app.controllers', ['firebase'])
 		// 		alert("Authentication failed " + error.message);
 		// 		$ionicLoading.hide();
 		// 	});
-		// } else {
-		// 	alert("Please enter both email and password");
-		// }
+
+
+		if(user && user.email && user.password) {
+			$ionicLoading.show({
+				template: 'Signing In...'
+			});
+			ref.authWithPassword({
+		  email: user.email,
+		  password: user.password
+			}, function(error, authData) {
+				console.log("This is a login error" + error.message);
+				console.log("This is the payload" + authData.uid);
+			});
+			$ionicLoading.hide();
+			$scope.modal.hide();
+
+		} else {
+			alert("Please enter both email and password");
+		}
 	};
 
 	$scope.createUser = function(user) {
-		// if(user && user.displayName && user.email && user.password) {
-		// 	$ionicLoading.show({
-		// 		template: 'Signing Up...'
-		// 	});
-		// 	ref.createUser({
-		// 		email: user.email,
-		// 		password: user.password
-		// 	}).then(function(userData) {
-		// 		alert("User created successfully!");
-		// 		ref.child("users").child(userData.uid).set({
-		// 			email: user.email,
-		// 			password: user.displayName
-		// 		});
-		// 		$ionicLoading.hide();
-		// 		$scope.modal.hide();
-		// 	}).catch(function (error) {
-		// 		alert ("Error: " + error);
-		// 		$ionicLoading.hide();
-		// 	});
-		// } else {
-		// 	alert("Please fill in all details");
-		// }
+		if(user && user.username && user.email && user.password) {
+			$ionicLoading.show({
+				template: 'Signing Up...'
+			});
+			ref.createUser({
+				email: user.email,
+				password: user.password,
+				username: user.username
+			}, function(error, dataAuth) {
+				console.log("This is the error" + error);
+				console.log("This is the payload: " + dataAuth);
+				$ionicLoading.hide();
+				$scope.modal.hide();
+			});
+		} else {
+			alert("Please fill in all details");
+		}
 	};
 })
 .controller('ChatCtrl', function($scope, $state, $firebaseArray, $firebase, $ionicLoading, $rootScope) {

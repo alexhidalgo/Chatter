@@ -1,3 +1,3 @@
 angular.module('app.services', ['firebase'])
 
-.factory('Auth', ['$firebaseAuth', 'rootScope'])
+.factory('Auth', ['$firebaseAuth', 'rootScope']);

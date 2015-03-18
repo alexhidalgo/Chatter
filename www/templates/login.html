@@ -6,20 +6,22 @@
 	<form novalidate name="loginForm" class="list">
 
 		<div class="list list-inset">
+
 		  <label class="item item-input item-floating-label">
 		  	<span class="input-label">User Name</span>
 		    <i class="icon ion-person placeholder-icon"></i>
 		    <input required class="floating-input-icon" name="username" style="display: inline-block;" type="text" placeholder="Sally Smith" ng-model="user.username">
 		  </label>
-		  <div ng-show="username">
-		  	please fill in
-		  </div>
+		  <label class="item item-input item-floating-label">
+	    	<span class="input-label">Email</span>
+	    	<input type="text" placeholder="email" ng-model="user.email">
+	  	</label>
+	  	<label class="item item-input item-floating-label">
+	    	<span class="input-label">Password</span>
+	    	<input type="password" placeholder="password" ng-model="user.password">
+	  	</label>
 		</div>
 
-	  <!-- <label class="item item-input item-floating-label">
-	    <span class="input-label">Password</span>
-	    <input type="password" placeholder="password" ng-model="user.password">
-	  </label> -->
 	</form>
 	<div class="button-box">
 		<button id="login-button" class="button button-positive" ng-click="login(user)">
@@ -27,8 +29,8 @@
 		</button>
 	</div>
 
-	<!-- <button class="button button-outline button-positive" ng-click="modal.show()">
+	<button class="button button-outline button-positive" ng-click="modal.show()">
   Create New User
-</button> -->
+</button>
 </ion-content>
 </ion-view>
