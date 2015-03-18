@@ -32,3 +32,14 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
    white-space: -o-pre-wrap;   /* Opera 7 */
    word-wrap: break-word;      /* IE */
 }
+
+.button-box {
+	text-align: center;
+}
+
+.loginForm .ng-dirty.ng-invalid {
+	background: red;
+}
+
+
+

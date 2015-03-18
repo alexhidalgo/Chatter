@@ -1,4 +1,4 @@
-angular.module('app', ['ionic', 'app.controllers', 'firebase'])
+angular.module('app', ['ionic', 'firebase', 'app.controllers'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -25,7 +25,7 @@ angular.module('app', ['ionic', 'app.controllers', 'firebase'])
     url: '/chat',
     templateUrl: 'templates/chat.html',
     controller: 'ChatCtrl'
-  })
+  });
 
-  $urlRouterProvider.otherwise('/login')
-})
+  $urlRouterProvider.otherwise('/login');
+});

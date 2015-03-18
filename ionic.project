@@ -1,6 +1,6 @@
 {
   "name": "Chatter",
-  "app_id": "",
+  "app_id": "29aee77d",
   "gulpStartupTasks": [
     "sass",
     "watch"
