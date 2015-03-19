@@ -1,12 +1,12 @@
 <ion-modal-view>
 	<ion-header-bar>
 		<h1 class="title">Create Account</h1>
-		<button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
+		<button class="button button-clear button-primary" ng-click="cancelSignup(user)">Cancel</button>
 	</ion-header-bar>
 	<ion-content>
 		<form action="" class="list">
 			<label class="item item-input">
-				<input type="text" placeholder="Display Name" ng-model="user.displayName">
+				<input type="text" placeholder="Display Name" ng-model="user.username">
 			</label>
 			<label class="item item-input">
 				<input type="email" placeholder="Email" ng-model="user.email">
