@@ -34,9 +34,15 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 }
 
 .list .item-content {
-	padding: 0;
+	border: 1px solid #ddd;
+	padding-top: 0;
+	padding-bottom: 0;
 }
 
 .list ion-item {
+	border: 0;
+}
+
+.list .item-content a {
 	border: 0;
 }
