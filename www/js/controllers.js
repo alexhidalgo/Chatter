@@ -45,27 +45,36 @@ angular.module('app.controllers', ['firebase'])
 		  email: user.email,
 		  password: user.password
 			}, function(error, authData) {
-				console.log("This is a login error" + error.message);
+				console.log("This is a login error" + error);
 				console.log("This is the payload" + authData.uid);
+				ref.child("users").child(authData.uid).once('value', function(snapshot) {
+					var val = snapshot.val();
+					// To Update AngularJS $scope either use $apply or $timeout
+					$scope.$apply(function () {
+						$rootScope.username = val;
+					});
 			});
 			$ionicLoading.hide();
-			$scope.modal.hide();
-
-		} else {
-			alert("Please enter both email and password");
+			$state.go('chat');
+			// $scope.modal.hide();
+			});
 		}
 	};
-
 	$scope.createUser = function(user) {
+		console.log('test');
 		if(user && user.username && user.email && user.password) {
 			$ionicLoading.show({
 				template: 'Signing Up...'
 			});
+
 			ref.createUser({
 				email: user.email,
 				password: user.password,
-				username: user.username
 			}, function(error, dataAuth) {
+				ref.child("users").child(dataAuth.uid).set({
+					email: user.email,
+					displayName: user.username
+				});
 				console.log("This is the error" + error);
 				console.log("This is the payload: " + dataAuth);
 				$ionicLoading.hide();
@@ -98,15 +107,16 @@ angular.module('app.controllers', ['firebase'])
 		// ref.unauth();
 		$state.go('login');
 		$ionicLoading.hide();
-		console.log($rootScope.username);
-		$rootScope.username = "";
-		console.log($rootScope.username);
+		// console.log($rootScope.username);
+		// $rootScope.username = "";
+		// console.log($rootScope.username);
 
 		console.log("Success logout");
 	};
 	$scope.send = function(message) {
 		ref.push({ username: $rootScope.username,
-			message: message });
+			message: message,
+			createdAt: Firebase.ServerValue.TIMESTAMP });
 		$scope.message = "";
 	};
 });
