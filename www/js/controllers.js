@@ -3,6 +3,11 @@ angular.module('app.controllers', ['firebase'])
 
 	var ref = new Firebase('https://dazzling-fire-5775.firebaseio.com');
 
+	$scope.user = "";
+	// $scope.user.username = "";
+	// $scope.user.email = "";
+	// $scope.user.password = "";
+
 	$ionicModal.fromTemplateUrl('templates/signup.html',  {
 		scope: $scope,
 		animation: 'slide-in-up'
@@ -11,32 +16,6 @@ angular.module('app.controllers', ['firebase'])
 	});
 
 	$scope.login = function(user) {
-		// if(user.username !== ""){
-		// 	console.log("This is the username" + user);
-		// 	$rootScope.username = user.username;
-		// 	console.log($rootScope.username);
-		// 	$state.go('chat');
-		// 	$scope.username = "";
-		// }
-
-		// .then(function(authData) {
-		// 		console.log("Logged in as: " + authData.uid);
-		// 		ref.child("users").child(authData.uid).once('value', function(snapshot) {
-		// 			var val = snapshot.val();
-		// 			console.log(val);
-		// 			//To Update AngularJS $scope either use $apply or $timeout
-		// 			$scope.apply(function() {
-		// 				$rootScope.displayName = val;
-		// 			});
-		// 		});
-		// 		$ionicLoading.hide();
-		// 		$state.go('chat');
-		// 	}).catch(function(error) {
-		// 		alert("Authentication failed " + error.message);
-		// 		$ionicLoading.hide();
-		// 	});
-
-
 		if(user && user.email && user.password) {
 			$ionicLoading.show({
 				template: 'Signing In...'
@@ -45,19 +24,31 @@ angular.module('app.controllers', ['firebase'])
 		  email: user.email,
 		  password: user.password
 			}, function(error, authData) {
-				console.log("This is a login error" + error);
-				console.log("This is the payload" + authData.uid);
-				ref.child("users").child(authData.uid).once('value', function(snapshot) {
-					var val = snapshot.val();
-					// To Update AngularJS $scope either use $apply or $timeout
-					$scope.$apply(function () {
-						$rootScope.username = val;
+				if(error === null) {
+					console.log("Success error. Start logging in.");
+					console.log("This is the payload" + authData.uid);
+					ref.child("users").child(authData.uid).once('value', function(snapshot) {
+						var val = snapshot.val();
+						// To Update AngularJS $scope either use $apply or $timeout
+						$scope.$apply(function () {
+							$rootScope.username = val;
+						});
 					});
+						$ionicLoading.hide();
+						user.email = "";
+						user.password = "";
+						$state.go('chat');
+
+				} else {
+					console.log("Problem with authentication: " + error);
+					$ionicLoading.hide();
+					alert("Problem with authentication: " + error);
+					//add ng-messages
+				}
 			});
-			$ionicLoading.hide();
-			$state.go('chat');
-			// $scope.modal.hide();
-			});
+		} else {
+			alert("Empty email and password");
+			//add ng-message alerts
 		}
 	};
 	$scope.createUser = function(user) {
@@ -66,23 +57,39 @@ angular.module('app.controllers', ['firebase'])
 			$ionicLoading.show({
 				template: 'Signing Up...'
 			});
-
 			ref.createUser({
 				email: user.email,
 				password: user.password,
 			}, function(error, dataAuth) {
-				ref.child("users").child(dataAuth.uid).set({
+				if(error === null) {
+					console.log("This is the payload: " + dataAuth);
+					ref.child("users").child(dataAuth.uid).set({
 					email: user.email,
 					displayName: user.username
 				});
-				console.log("This is the error" + error);
-				console.log("This is the payload: " + dataAuth);
 				$ionicLoading.hide();
-				$scope.modal.hide();
+				} else if(error.code == "EMAIL_TAKEN") {
+					alert(error);
+					$ionicLoading.hide();
+				} else {
+					alert(error);
+					console.log("This is the error" + error);
+					$ionicLoading.hide();
+				}
 			});
 		} else {
 			alert("Please fill in all details");
 		}
+	};
+
+	$scope.cancelSignup = function(user) {
+
+
+		console.log(user);
+		user.email = "";
+		console.log(user.email);
+		console.log("cancel signup form");
+		$scope.modal.hide();
 	};
 })
 .controller('ChatCtrl', function($scope, $state, $firebaseArray, $firebase, $ionicLoading, $rootScope) {
@@ -93,6 +100,7 @@ angular.module('app.controllers', ['firebase'])
 
 	ref.on('value', function(snapshot) {
 		var data = snapshot.val();
+		//check data to make sure it has all the necessary atributes. Try lodash or angular filter.
 		$scope.chats = data;
 		console.log($scope.chats);
 

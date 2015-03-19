@@ -4,14 +4,7 @@
 	</ion-header-bar>
 <ion-content>
 	<form novalidate name="loginForm" class="list">
-
 		<div class="list list-inset">
-
-		  <!-- <label class="item item-input item-floating-label">
-		  	<span class="input-label">User Name</span>
-		    <i class="icon ion-person placeholder-icon"></i>
-		    <input required class="floating-input-icon" name="username" style="display: inline-block;" type="text" placeholder="Sally Smith" ng-model="user.username">
-		  </label> -->
 		  <label class="item item-input item-floating-label">
 	    	<span class="input-label">Email</span>
 	    	<input type="text" placeholder="email" ng-model="user.email">
@@ -21,7 +14,6 @@
 	    	<input type="password" placeholder="password" ng-model="user.password">
 	  	</label>
 		</div>
-
 	</form>
 	<div class="button-box">
 		<button id="login-button" class="button button-positive" ng-click="login(user)">

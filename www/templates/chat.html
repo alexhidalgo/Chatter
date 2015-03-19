@@ -9,18 +9,22 @@
   <!-- <ion-item ng-if="chat.length" class="textCenter">
       <h4>No messages in this room. Send message to start.</h4>
   </ion-item> -->
-
-	<div ng-repeat="chat in chats">
+<ion-list>
+	<ion-item ng-repeat="chat in chats">
     <div class="list item-text-wrap">
         <a class="item item-avatar" href="#">
           <img src="img/avatar.jpg">
-          <p am-time-ago="chat.createdAt" style="margin-bottom: 0;"class="item-note"></p>
+          <p am-time-ago="chat.createdAt" class="item-note"></p>
           <h2>{{ chat.username.displayName }}</h2>
           <p>{{ chat.message }}</p>
+          <ion-option-button>
+            <button class="button button-assertive" ng-click="remove(chat)">Remove</button>
+          </ion-option-button>
 
         </a>
     </div>
-	</div>
+	</ion-item>
+</ion-list>
 </ion-content>
 
 <ion-footer-bar>
