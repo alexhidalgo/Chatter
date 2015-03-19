@@ -11,12 +11,13 @@
   </ion-item> -->
 
 	<div ng-repeat="chat in chats">
-    <div class="list">
+    <div class="list item-text-wrap">
         <a class="item item-avatar" href="#">
           <img src="img/avatar.jpg">
+          <p am-time-ago="chat.createdAt" style="margin-bottom: 0;"class="item-note"></p>
           <h2>{{ chat.username.displayName }}</h2>
           <p>{{ chat.message }}</p>
-          <span am-time-ago="chat.createdAt" class="item-note">
+
         </a>
     </div>
 	</div>

@@ -104,7 +104,7 @@ angular.module('app.controllers', ['firebase'])
 		$ionicLoading.show({
 			templates: "Signing out..."
 		});
-		// ref.unauth();
+		ref.unauth();
 		$state.go('login');
 		$ionicLoading.hide();
 		// console.log($rootScope.username);
