@@ -14,15 +14,17 @@
 	    	<input type="password" placeholder="password" ng-model="user.password">
 	  	</label>
 		</div>
+		<div class="button-box">
+			<button id="login-button" class="button button-positive" ng-click="login(user)">
+		  Login
+			</button>
+			<button class="button button-outline button-positive" ng-click="modal.show()">
+	  	Create New User
+			</button>
+		</div>
 	</form>
-	<div class="button-box">
-		<button id="login-button" class="button button-positive" ng-click="login(user)">
-	  Login
-		</button>
-	</div>
 
-	<button class="button button-outline button-positive" ng-click="modal.show()">
-  Create New User
-</button>
+
+
 </ion-content>
 </ion-view>
