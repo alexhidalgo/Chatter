@@ -1,7 +1,7 @@
 <ion-modal-view>
 	<ion-header-bar>
 		<h1 class="title">Create Account</h1>
-		<button class="button button-clear button-primary" ng-click="cancelSignup(user)">Cancel</button>
+		<button class="button button-clear button-primary" ng-click="cancelSignup()">Cancel</button>
 	</ion-header-bar>
 	<ion-content>
 		<form action="" class="list">
@@ -14,6 +14,36 @@
 			<label class="item item-input">
 				<input type="password" placeholder="Password" ng-model="user.password">
 			</label>
+
+			<!-- <label class="item item-input item-select">
+		    <div class="input-label">
+		      Avatar
+		    </div>
+		    <select ng-model="user.avatar">
+		      <option name="avatar" value="avatar" selected>Guy</option>
+		      <option name="avatar" value="smile">Smile</option>
+		      <option name="avatar" value="whale">Whale</option>
+		      <option name="avatar" value="doug">Doug</option>
+		    </select>
+		  </label> -->
+		  <div class="avatar-container">
+		  	<label class="avatar-select-box">
+					<input class="input-image" type="radio" value="doug" ng-model="user.avatar">
+					<img src="img/doug.jpg" alt="">
+			  </label>
+			  <label class="avatar-select-box">
+					<input class="input-image" type="radio" value="avatar" ng-model="user.avatar">
+					<img src="img/avatar.jpg" alt="">
+			  </label>
+			  <label class="avatar-select-box">
+					<input class="input-image" type="radio" value="whale" ng-model="user.avatar">
+					<img src="img/whale.jpg" alt="">
+			  </label>
+			  <label class="avatar-select-box">
+					<input class="input-image" type="radio" value="smile" ng-model="user.avatar">
+					<img src="img/smile.jpg" alt="">
+			  </label>
+		  </div>
 			<button ng-click="createUser(user)" class="button button-positive">Create</button>
 		</form>
 	</ion-content>

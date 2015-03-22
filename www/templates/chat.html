@@ -9,18 +9,17 @@
   <!-- <ion-item ng-if="chat.length" class="textCenter">
       <h4>No messages in this room. Send message to start.</h4>
   </ion-item> -->
-<ion-list>
-	<ion-item ng-repeat="chat in chats">
+<ion-list class="chat-list">
+	<ion-item ng-show="chat.createdAt" ng-repeat="chat in chats | filter:{createdAt: '!undefined'}">
     <div class="list item-text-wrap">
         <a class="item item-avatar" href="#">
-          <img src="img/avatar.jpg">
+          <img src="img/{{ chat.username.avatar }}.jpg">
           <p am-time-ago="chat.createdAt" class="item-note"></p>
-          <h2>{{ chat.username.displayName }}</h2>
+          <h2>{{ chat.username.username }}</h2>
           <p>{{ chat.message }}</p>
           <ion-option-button>
-            <button class="button button-assertive" ng-click="remove(chat)">Remove</button>
+            <button class="button button-assertive" ng-click="remove(chat)">Delete</button>
           </ion-option-button>
-
         </a>
     </div>
 	</ion-item>

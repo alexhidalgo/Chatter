@@ -29,4 +29,27 @@ angular.module('app', ['ionic', 'firebase', 'app.controllers', 'angularMoment'])
   });
 
   $urlRouterProvider.otherwise('/login');
+})
+
+.directive('bottomScroll', function() {
+  return {
+    scope: {
+      bottomScroll: "="
+    },
+    link: function($scope, element) {
+      scope.$watchCollection('bottomScroll', function(newValue) {
+        if(newValue) {
+          $(element).scrollTop($(element)[0].scrollHeight);
+        }
+      });
+    }
+  };
 });
+
+// .directive('bottomScroll', function() {
+//   return {
+//       restrict: 'AE',
+//       replace: 'true',
+//       template: '<h3>Hello World!!</h3>'
+//   };
+// });
