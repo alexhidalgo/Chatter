@@ -1,6 +1,6 @@
 # PropChat - Under Development
 
-![Alt text](https://lh3.ggpht.com/3I3zGI2LEZhU3fkxK7bPg9dv94Ah0cnqpsM2fDxfqIF0Xkv0n_IPFkum2eJlwciLZLSQ=h310-rw "Optional title")
+![Alt text](assets/images/chatter-login.png "Optional title")
 
 > #####"Clean code always looks like it was written by someone who cares."
 
