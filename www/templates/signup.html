@@ -4,28 +4,17 @@
 		<button class="button button-clear button-primary" ng-click="cancelSignup()">Cancel</button>
 	</ion-header-bar>
 	<ion-content>
-		<form action="" class="list">
+		<form novalidate name="creationForm" class="list" ng-submit="createUser(user)">
 			<label class="item item-input">
-				<input type="text" placeholder="Display Name" ng-model="user.username">
+				<input required type="text" placeholder="Display Name" ng-model="user.username">
 			</label>
 			<label class="item item-input">
-				<input type="email" placeholder="Email" ng-model="user.email">
+				<input required type="email" placeholder="Email" ng-model="user.email">
 			</label>
 			<label class="item item-input">
-				<input type="password" placeholder="Password" ng-model="user.password">
+				<input required type="password" placeholder="Password" ng-model="user.password">
 			</label>
 
-			<!-- <label class="item item-input item-select">
-		    <div class="input-label">
-		      Avatar
-		    </div>
-		    <select ng-model="user.avatar">
-		      <option name="avatar" value="avatar" selected>Guy</option>
-		      <option name="avatar" value="smile">Smile</option>
-		      <option name="avatar" value="whale">Whale</option>
-		      <option name="avatar" value="doug">Doug</option>
-		    </select>
-		  </label> -->
 		  <div class="avatar-container">
 		  	<label class="avatar-select-box">
 					<input class="input-image" type="radio" value="doug" ng-model="user.avatar">
@@ -44,7 +33,7 @@
 					<img src="img/smile.jpg" alt="">
 			  </label>
 		  </div>
-			<button ng-click="createUser(user)" class="button button-positive">Create</button>
+			<button type="submit" class="button button-positive">Create</button>
 		</form>
 	</ion-content>
 </ion-modal-view>

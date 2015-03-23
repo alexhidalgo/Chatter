@@ -7,7 +7,7 @@ angular.module('app.controllers', ['firebase'])
 		email: "",
 		password: "",
 		username: "",
-		avatar: ""
+		avatar: "doug"
 	};
 
 	$ionicModal.fromTemplateUrl('templates/signup.html',  {
@@ -54,8 +54,25 @@ angular.module('app.controllers', ['firebase'])
 			//add ng-message alerts
 		}
 	};
+
+	// $scope.resetPassword = function(user) {
+
+
+	// 	ref.resetPassword({
+	// 	    email : user.email
+	// 	  }, function(error) {
+	// 	  if (error === null) {
+	// 	    console.log("Password reset email sent successfully");
+	// 	    alert("Reset successful. Please check your email for your new temporary password.");
+	// 	  } else {
+	// 	    console.log("Error sending password reset email:", error);
+	// 	  }
+	// 	});
+
+	// };
+
 	$scope.createUser = function(user) {
-		console.log('test');
+		console.log('start createUser function');
 		//function onUserCreated(err, dataAuth) {
 
 		//}
@@ -66,6 +83,7 @@ angular.module('app.controllers', ['firebase'])
 
 		//}
 		if(user && user.username && user.email && user.password) {
+			console.log('entered into if statement');
 			$ionicLoading.show({
 				template: 'Signing Up...'
 			});
@@ -92,8 +110,8 @@ angular.module('app.controllers', ['firebase'])
 									// To Update AngularJS $scope either use $apply or $timeout
 									$scope.$apply(function () {
 										$rootScope.username = val;
-
 									});
+
 								});
 									$ionicLoading.hide();
 									user.email = "";
@@ -110,9 +128,6 @@ angular.module('app.controllers', ['firebase'])
 					});
 				});
 
-				$ionicLoading.hide();
-				$scope.modal.hide();
-				$state.go('chat');
 				} else if(error.code == "EMAIL_TAKEN") {
 					alert(error);
 					$ionicLoading.hide();
