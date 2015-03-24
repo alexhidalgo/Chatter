@@ -85,6 +85,7 @@ angular.module('app.controllers', ['firebase'])
 						// To Update AngularJS $scope either use $apply or $timeout
 						$scope.$apply(function () {
 							$rootScope.username = val;
+							console.log("apply method" + $rootScope.username);
 						});
 					});
 					ref.child("users").child(dataAuth.uid).set({
@@ -150,7 +151,7 @@ angular.module('app.controllers', ['firebase'])
 		$ionicScrollDelegate.scrollBottom([true]);
 		//check data to make sure it has all the necessary atributes. Try lodash or angular filter.
 		$scope.chats = data;
-		console.log(data);
+		console.log("This is the data for the chats listener", data);
 
 	}, function (errorObject) {
 			console.log("The read failed: " + errorObject.code);
