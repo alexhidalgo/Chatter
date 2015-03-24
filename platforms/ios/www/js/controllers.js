@@ -35,22 +35,16 @@ angular.module('app.controllers', ['firebase'])
 							$rootScope.username = val;
 						});
 					});
-					console.log("Success error. Start logging in.");
-					console.log("This is the payload", dataAuth.uid);
-					console.log(dataAuth.uid);
-					ref.child("users").child(dataAuth.uid).once('value', function(snapshot) {
-						var val = snapshot.val();
-						console.log("This is the val" + val.username);
-						// To Update AngularJS $scope either use $apply or $timeout
-						$scope.$apply(function () {
-							$rootScope.username = val;
-						});
-					});
-						$ionicLoading.hide();
-						user.email = "";
-						user.password = "";
-						$state.go('chat');
-						$ionicScrollDelegate.scrollBottom([true]);
+					console.log("Success error. Start logging in. This is the payload", dataAuth.uid);
+					setTimeout(function() {
+				    // var delegate = $ionicScrollDelegate.$getByHandle('myScroll');
+				    	$ionicScrollDelegate.scrollBottom([true]);
+					},10);
+					user.email = "";
+					user.password = "";
+					$state.go('chat');
+					$ionicLoading.hide();
+
 
 				} else {
 					console.log("Problem with authentication: " + error);
@@ -65,22 +59,6 @@ angular.module('app.controllers', ['firebase'])
 		}
 	};
 
-	// $scope.resetPassword = function(user) {
-
-
-	// 	ref.resetPassword({
-	// 	    email : user.email
-	// 	  }, function(error) {
-	// 	  if (error === null) {
-	// 	    console.log("Password reset email sent successfully");
-	// 	    alert("Reset successful. Please check your email for your new temporary password.");
-	// 	  } else {
-	// 	    console.log("Error sending password reset email:", error);
-	// 	  }
-	// 	});
-
-	// };
-
 	$scope.createUser = function(user) {
 		console.log('start createUser function');
 		//function onUserCreated(err, dataAuth) {
@@ -92,8 +70,7 @@ angular.module('app.controllers', ['firebase'])
 		//function onLogin(dataAuth) {
 
 		//}
-		if(user && user.username && user.email && user.password) {
-			console.log('entered into if statement');
+		if(user && user.username && user.email && user.password && user.avatar) {
 			$ionicLoading.show({
 				template: 'Signing Up...'
 			});
@@ -102,39 +79,32 @@ angular.module('app.controllers', ['firebase'])
 				password: user.password,
 			}, function(error, dataAuth) {
 				if(error === null) {
-					// console.log("This is the payload: ", dataAuth);
-
-						ref.child("users").child(dataAuth.uid).once('value', function(snapshot) {
-							var val = snapshot.val();
-							console.log('user', val);
-							// To Update AngularJS $scope either use $apply or $timeout
-							$scope.$apply(function () {
-								$rootScope.username = val;
-							});
+					ref.child("users").child(dataAuth.uid).once('value', function(snapshot) {
+						var val = snapshot.val();
+						console.log('user', val);
+						// To Update AngularJS $scope either use $apply or $timeout
+						$scope.$apply(function () {
+							$rootScope.username = val;
+							console.log("apply method" + $rootScope.username);
 						});
+					});
 					ref.child("users").child(dataAuth.uid).set({
 						email: user.email,
 						username: user.username,
 						avatar: user.avatar
 					}, function() {
-						console.log('avatar set');
+						console.log('avatar and username set');
 						ref.authWithPassword({
 							email: user.email,
 							password: user.password
 						}, function(error, authData) {
 								if(error === null) {
-									console.log('LOGIN');
-									console.log("Success error. Start logging in.");
-									console.log("This is the payload", authData.uid);
-									console.log(authData);
-
-
-
-									$ionicLoading.hide();
-									$scope.modal.hide();
+									console.log("LOGIN Success error. Start logging in.", authData.uid);
 									user.email = "";
 									user.password = "";
 									$state.go('chat');
+									$ionicLoading.hide();
+									$scope.modal.hide();
 									$ionicScrollDelegate.scrollBottom([true]);
 
 								} else {
@@ -171,8 +141,6 @@ angular.module('app.controllers', ['firebase'])
 .controller('ChatCtrl', function($scope, $filter, $state, $firebaseArray, $firebase, $ionicLoading, $rootScope, $ionicScrollDelegate) {
 
 	var ref = new Firebase('https://dazzling-fire-5775.firebaseio.com');
-	var postRef = ref.child("posts");
-	var list = $firebaseArray(ref);
 
 	$scope.message = {
 		message: ""
@@ -183,7 +151,7 @@ angular.module('app.controllers', ['firebase'])
 		$ionicScrollDelegate.scrollBottom([true]);
 		//check data to make sure it has all the necessary atributes. Try lodash or angular filter.
 		$scope.chats = data;
-		console.log(data);
+		console.log("This is the data for the chats listener", data);
 
 	}, function (errorObject) {
 			console.log("The read failed: " + errorObject.code);
@@ -196,9 +164,7 @@ angular.module('app.controllers', ['firebase'])
 		ref.unauth();
 		$state.go('login');
 		$ionicLoading.hide();
-		console.log($rootScope.username);
 		$rootScope.username = "";
-		console.log($rootScope.username);
 		$scope.message.message = "";
 		console.log("Success logout");
 	};
