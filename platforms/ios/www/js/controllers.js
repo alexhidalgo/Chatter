@@ -7,7 +7,7 @@ angular.module('app.controllers', ['firebase'])
 		email: "",
 		password: "",
 		username: "",
-		avatar: ""
+		avatar: "doug"
 	};
 
 	$ionicModal.fromTemplateUrl('templates/signup.html',  {
@@ -25,11 +25,20 @@ angular.module('app.controllers', ['firebase'])
 			ref.authWithPassword({
 		  email: user.email,
 		  password: user.password
-			}, function(error, authData) {
+			}, function(error, dataAuth) {
 				if(error === null) {
+					ref.child("users").child(dataAuth.uid).once('value', function(snapshot) {
+						var val = snapshot.val();
+						console.log('user', val);
+						// To Update AngularJS $scope either use $apply or $timeout
+						$scope.$apply(function () {
+							$rootScope.username = val;
+						});
+					});
 					console.log("Success error. Start logging in.");
-					console.log("This is the payload" + authData.uid);
-					ref.child("users").child(authData.uid).once('value', function(snapshot) {
+					console.log("This is the payload", dataAuth.uid);
+					console.log(dataAuth.uid);
+					ref.child("users").child(dataAuth.uid).once('value', function(snapshot) {
 						var val = snapshot.val();
 						console.log("This is the val" + val.username);
 						// To Update AngularJS $scope either use $apply or $timeout
@@ -41,6 +50,7 @@ angular.module('app.controllers', ['firebase'])
 						user.email = "";
 						user.password = "";
 						$state.go('chat');
+						$ionicScrollDelegate.scrollBottom([true]);
 
 				} else {
 					console.log("Problem with authentication: " + error);
@@ -54,8 +64,25 @@ angular.module('app.controllers', ['firebase'])
 			//add ng-message alerts
 		}
 	};
+
+	// $scope.resetPassword = function(user) {
+
+
+	// 	ref.resetPassword({
+	// 	    email : user.email
+	// 	  }, function(error) {
+	// 	  if (error === null) {
+	// 	    console.log("Password reset email sent successfully");
+	// 	    alert("Reset successful. Please check your email for your new temporary password.");
+	// 	  } else {
+	// 	    console.log("Error sending password reset email:", error);
+	// 	  }
+	// 	});
+
+	// };
+
 	$scope.createUser = function(user) {
-		console.log('test');
+		console.log('start createUser function');
 		//function onUserCreated(err, dataAuth) {
 
 		//}
@@ -66,6 +93,7 @@ angular.module('app.controllers', ['firebase'])
 
 		//}
 		if(user && user.username && user.email && user.password) {
+			console.log('entered into if statement');
 			$ionicLoading.show({
 				template: 'Signing Up...'
 			});
@@ -74,54 +102,59 @@ angular.module('app.controllers', ['firebase'])
 				password: user.password,
 			}, function(error, dataAuth) {
 				if(error === null) {
-					console.log("This is the payload: " + dataAuth);
-					ref.child("users").child(dataAuth.uid).set({
-					email: user.email,
-					username: user.username,
-					avatar: user.avatar
-				}, function() {
-					ref.authWithPassword({
-						email: user.email,
-						password: user.password
-					}, function(error, authData) {
-							if(error === null) {
-								console.log("Success error. Start logging in.");
-								console.log("This is the payload" + authData.uid);
-								ref.child("users").child(authData.uid).once('value', function(snapshot) {
-									var val = snapshot.val();
-									// To Update AngularJS $scope either use $apply or $timeout
-									$scope.$apply(function () {
-										$rootScope.username = val;
+					// console.log("This is the payload: ", dataAuth);
 
-									});
-								});
+						ref.child("users").child(dataAuth.uid).once('value', function(snapshot) {
+							var val = snapshot.val();
+							console.log('user', val);
+							// To Update AngularJS $scope either use $apply or $timeout
+							$scope.$apply(function () {
+								$rootScope.username = val;
+							});
+						});
+					ref.child("users").child(dataAuth.uid).set({
+						email: user.email,
+						username: user.username,
+						avatar: user.avatar
+					}, function() {
+						console.log('avatar set');
+						ref.authWithPassword({
+							email: user.email,
+							password: user.password
+						}, function(error, authData) {
+								if(error === null) {
+									console.log('LOGIN');
+									console.log("Success error. Start logging in.");
+									console.log("This is the payload", authData.uid);
+									console.log(authData);
+
+
+
 									$ionicLoading.hide();
+									$scope.modal.hide();
 									user.email = "";
 									user.password = "";
 									$state.go('chat');
 									$ionicScrollDelegate.scrollBottom([true]);
 
-							} else {
-								console.log("Problem with authentication: " + error);
-								$ionicLoading.hide();
-								alert("Problem with authentication: " + error);
-								//add ng-messages
-							}
+								} else {
+									console.log("Problem with authentication: " + error);
+									$ionicLoading.hide();
+									alert("Problem with authentication: " + error);
+									//add ng-messages
+								}
+						});
 					});
-				});
 
-				$ionicLoading.hide();
-				$scope.modal.hide();
-				$state.go('chat');
-				} else if(error.code == "EMAIL_TAKEN") {
-					alert(error);
-					$ionicLoading.hide();
-				} else {
-					alert(error);
-					console.log("This is the error" + error);
-					$ionicLoading.hide();
-				}
-			});
+					} else if(error.code == "EMAIL_TAKEN") {
+						alert(error);
+						$ionicLoading.hide();
+					} else {
+						alert(error);
+						console.log("This is the error" + error);
+						$ionicLoading.hide();
+					}
+				});
 		} else {
 			alert("Please fill in all details");
 		}
