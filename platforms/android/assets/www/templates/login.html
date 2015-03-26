@@ -1,0 +1,30 @@
+<ion-view>
+	<ion-header-bar class="bar bar-header bar-positive">
+	  <h1 class="title">Chatter</h1>
+	</ion-header-bar>
+<ion-content>
+	<form novalidate name="loginForm" class="list">
+		<div class="list list-inset">
+		  <label class="item item-input item-floating-label">
+	    	<span class="input-label">Email</span>
+	    	<input type="text" placeholder="email" ng-model="user.email">
+	  	</label>
+	  	<label class="item item-input item-floating-label">
+	    	<span class="input-label">Password</span>
+	    	<input type="password" placeholder="password" ng-model="user.password">
+	  	</label>
+		</div>
+		<div class="button-box">
+			<button id="login-button" class="button button-positive" ng-click="login(user)">
+		  Login
+			</button>
+			<button class="button button-outline button-positive" ng-click="modal.show()">
+	  	Create New User
+			</button>
+		</div>
+	</form>
+
+
+
+</ion-content>
+</ion-view>

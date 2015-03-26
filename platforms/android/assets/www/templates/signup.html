@@ -1,0 +1,39 @@
+<ion-modal-view>
+	<ion-header-bar>
+		<h1 class="title">Create Account</h1>
+		<button class="button button-clear button-primary" ng-click="cancelSignup()">Cancel</button>
+	</ion-header-bar>
+	<ion-content>
+		<form novalidate name="creationForm" class="list" ng-submit="createUser(user)">
+			<label class="item item-input">
+				<input required type="text" placeholder="Display Name" ng-model="user.username">
+			</label>
+			<label class="item item-input">
+				<input required type="email" placeholder="Email" ng-model="user.email">
+			</label>
+			<label class="item item-input">
+				<input required type="password" placeholder="Password" ng-model="user.password">
+			</label>
+
+		  <div class="avatar-container">
+		  	<label class="avatar-select-box">
+					<input class="input-image" type="radio" value="doug" ng-model="user.avatar">
+					<img src="img/doug.jpg" alt="">
+			  </label>
+			  <label class="avatar-select-box">
+					<input class="input-image" type="radio" value="avatar" ng-model="user.avatar">
+					<img src="img/avatar.jpg" alt="">
+			  </label>
+			  <label class="avatar-select-box">
+					<input class="input-image" type="radio" value="whale" ng-model="user.avatar">
+					<img src="img/whale.jpg" alt="">
+			  </label>
+			  <label class="avatar-select-box">
+					<input class="input-image" type="radio" value="smile" ng-model="user.avatar">
+					<img src="img/smile.jpg" alt="">
+			  </label>
+		  </div>
+			<button type="submit" class="button button-positive">Create</button>
+		</form>
+	</ion-content>
+</ion-modal-view>

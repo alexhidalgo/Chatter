@@ -1,4 +1,4 @@
-angular.module('app.controllers', ['firebase'])
+angular.module('app.controllers', ['firebase', 'ngMessages'])
 .controller('LoginCtrl', function($scope, $rootScope, $firebase, $ionicLoading, $ionicModal, $state, $ionicScrollDelegate) {
 
 	var ref = new Firebase('https://dazzling-fire-5775.firebaseio.com');
@@ -49,12 +49,12 @@ angular.module('app.controllers', ['firebase'])
 				} else {
 					console.log("Problem with authentication: " + error);
 					$ionicLoading.hide();
-					alert("Problem with authentication: " + error);
+					alert(error);
 					//add ng-messages
 				}
 			});
 		} else {
-			alert("Empty email and password");
+			alert("Empty email or password");
 			//add ng-message alerts
 		}
 	};
@@ -106,7 +106,6 @@ angular.module('app.controllers', ['firebase'])
 									$ionicLoading.hide();
 									$scope.modal.hide();
 									$ionicScrollDelegate.scrollBottom([true]);
-
 								} else {
 									console.log("Problem with authentication: " + error);
 									$ionicLoading.hide();
