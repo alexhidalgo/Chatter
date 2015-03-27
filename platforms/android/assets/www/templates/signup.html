@@ -4,10 +4,13 @@
 		<button class="button button-clear button-primary" ng-click="cancelSignup()">Cancel</button>
 	</ion-header-bar>
 	<ion-content>
+
 		<form novalidate name="creationForm" class="list" ng-submit="createUser(user)">
+
 			<label class="item item-input">
-				<input required type="text" placeholder="Display Name" ng-model="user.username">
+				<input for="username" required name="username" type="text" placeholder="Display Name" ng-model="user.username">
 			</label>
+
 			<label class="item item-input">
 				<input required type="email" placeholder="Email" ng-model="user.email">
 			</label>

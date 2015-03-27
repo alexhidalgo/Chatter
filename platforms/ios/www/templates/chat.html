@@ -6,9 +6,6 @@
 </ion-header-bar>
 
 <ion-content>
-  <!-- <ion-item ng-if="chat.length" class="textCenter">
-      <h4>No messages in this room. Send message to start.</h4>
-  </ion-item> -->
 <ion-list class="chat-list">
 	<ion-item ng-show="chat.createdAt" ng-repeat="chat in chats | filter:{createdAt: '!undefined'}">
     <div class="list item-text-wrap">
