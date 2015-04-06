@@ -37,15 +37,12 @@ angular.module('app.controllers', ['firebase', 'ngMessages'])
 					});
 					console.log("Success error. Start logging in. This is the payload", dataAuth.uid);
 					setTimeout(function() {
-				    // var delegate = $ionicScrollDelegate.$getByHandle('myScroll');
-				    	$ionicScrollDelegate.scrollBottom([true]);
+			    	$ionicScrollDelegate.scrollBottom([true]);
 					},10);
 					user.email = "";
 					user.password = "";
 					$state.go('chat');
 					$ionicLoading.hide();
-
-
 				} else {
 					console.log("Problem with authentication: " + error);
 					$ionicLoading.hide();
@@ -82,11 +79,6 @@ angular.module('app.controllers', ['firebase', 'ngMessages'])
 					ref.child("users").child(dataAuth.uid).once('value', function(snapshot) {
 						var val = snapshot.val();
 						console.log('user', val);
-						// To Update AngularJS $scope either use $apply or $timeout
-						$scope.$apply(function () {
-							$rootScope.username = val;
-							console.log("apply method" + $rootScope.username);
-						});
 					});
 					ref.child("users").child(dataAuth.uid).set({
 						email: user.email,
@@ -100,12 +92,22 @@ angular.module('app.controllers', ['firebase', 'ngMessages'])
 						}, function(error, authData) {
 								if(error === null) {
 									console.log("LOGIN Success error. Start logging in.", authData.uid);
+									ref.child("users").child(dataAuth.uid).once('value', function(snapshot) {
+										var val = snapshot.val();
+										console.log('user', val);
+										// To Update AngularJS $scope either use $apply or $timeout
+										$scope.$apply(function () {
+											$rootScope.username = val;
+										});
+									});
 									user.email = "";
 									user.password = "";
 									$state.go('chat');
 									$ionicLoading.hide();
 									$scope.modal.hide();
-									$ionicScrollDelegate.scrollBottom([true]);
+									setTimeout(function() {
+							    	$ionicScrollDelegate.scrollBottom([true]);
+									},10);
 								} else {
 									console.log("Problem with authentication: " + error);
 									$ionicLoading.hide();
