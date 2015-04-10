@@ -75,7 +75,7 @@ $ bower install
 
 ###Follow my progress as a Junior Dev :)
 
-(http://alexjhidalgo.com)
+http://alexjhidalgo.com
 
 
 
