@@ -75,8 +75,8 @@ $ bower install
 
 ###Follow my progress as a Junior Dev :)
 
-(http://i.imgur.com/tXSoThF.png) (twitter icon with padding)
-[2.1]: http://i.imgur.com/P3YfQoD.png (facebook icon with padding)
+(http://alexjhidalgo.com) (twitter icon with padding)
+
 
 
 
